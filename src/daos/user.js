@@ -1,23 +1,30 @@
-const { ObjectId } = require('mongoose').Types;
 const User = require('../models/user');
+const { findDocument } = require('./daoUtil');
 
-const createUser = async ({ email, name, password }) => {
-  const user = await User.create({ email, name, password });
+const hideUserSensitiveFields = (user) => {
+  delete user.password;
+  delete user.salt;
+};
+
+const createUser = async (data) => {
+  let user = await User.create(data);
+
+  user = { ...user.toJSON() };
+  hideUserSensitiveFields(user);
+
   return user;
 };
 
-const findUser = async (condition) => {
-  if (ObjectId.isValid(condition)) {
-    const user = await User.findById(condition);
-    return user;
+const findUser = async (condition, { hideSensitiveFields = true } = {}) => {
+  const user = findDocument(User, condition);
+
+  if (user == null) return null;
+
+  if (hideSensitiveFields) {
+    hideUserSensitiveFields(user);
   }
 
-  if (typeof condition === 'object' && condition !== null) {
-    const user = await User.findOne(condition);
-    return user;
-  }
-
-  return null;
+  return user;
 };
 
 const updateUser = async (userId, data) => {

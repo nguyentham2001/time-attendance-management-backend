@@ -9,6 +9,7 @@ const camelCaseReq = require('./middlewares/camelCaseReq');
 const omitReq = require('./middlewares/omitReq');
 const snakeCaseRes = require('./middlewares/snakeCaseRes');
 const errorHandler = require('./middlewares/errorHandler');
+const { logger } = require('./utils/logger');
 
 require('dotenv').config();
 require('./models');
@@ -33,5 +34,5 @@ require('./routes')(app);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  logger.info(`Server is running on port ${PORT}`);
 });

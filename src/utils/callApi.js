@@ -2,6 +2,8 @@ const axios = require('axios');
 const camelCaseKeys = require('camelcase-keys');
 const uuid = require('uuid');
 
+const { logger } = require('./logger');
+
 const axiosInstance = axios.create({
   responseType: 'json',
   timeout: 10 * 1000,
@@ -15,7 +17,7 @@ axiosInstance.interceptors.request.use(
     const originalUrl = config.baseURL
       ? `${config.baseURL}${config.url}`
       : config.url;
-    console.log(
+    logger.info(
       '[callApi.req]',
       `[${config.id}]`,
       `${config.method.toUpperCase()} - ${originalUrl}`,
@@ -39,7 +41,7 @@ axiosInstance.interceptors.response.use(
     const isShowData = !blackList.includes(
       `${response.config.method.toUpperCase()} - ${originalUrl}`,
     );
-    console.log(
+    logger.info(
       '[callApi.res.success]',
       `[${response.config.id}]`,
       isShowData ? JSON.stringify(response.data) : '',
@@ -60,13 +62,13 @@ axiosInstance.interceptors.response.use(
         typeof data === 'string' &&
         data.match('<!DOCTYPE html>')
       );
-      console.log(
+      logger.info(
         '[callApi.res.error]',
         `[${config.id}]`,
         data && isShowData ? JSON.stringify(response.data) : '',
       );
     } else {
-      console.log('[callApi.res.error]', `[${config.id}]`, message);
+      logger.info('[callApi.res.error]', `[${config.id}]`, message);
     }
 
     return Promise.reject(error);

@@ -54,7 +54,7 @@ const compareBcrypt = async (data, hashed) => {
   return isCorrect;
 };
 
-const generateSalt = () => bcrypt.genSaltSync(10);
+const generateSalt = (rounds = 10) => bcrypt.genSaltSync(rounds);
 
 const encryptPassword = async (password, salt) => {
   // Transform the plaintext password to hash value using SHA512

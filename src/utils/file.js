@@ -1,12 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 
+const { logger } = require('./logger');
+
 const readFile = (filePath) => {
   try {
     const result = fs.readFileSync(filePath);
     return result;
   } catch (e) {
-    console.log(`Get file failed at ${filePath}: `, e);
+    logger.info(`Get file failed at ${filePath}: `, e);
     return null;
   }
 };

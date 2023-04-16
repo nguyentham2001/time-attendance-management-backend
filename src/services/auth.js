@@ -38,10 +38,14 @@ const verifyAccessToken = async (accessToken) => {
   const { userId } = data;
 
   const user = await userDao.findUser(userId);
+
+  delete user.password;
+  delete user.salt;
+
   return user;
 };
 
-const register = async ({ email, name, password }) => {
+const register = async ({ email, name, password, isAdmin }) => {
   let user = await userDao.findUser({ email });
   if (user) throw new CustomError(errorCodes.USER_EXISTS);
 
@@ -49,7 +53,7 @@ const register = async ({ email, name, password }) => {
   password = password || generateRandomString(16);
   password = await encryptPassword(password, salt);
 
-  user = await userDao.createUser({ email, name, password });
+  user = await userDao.createUser({ email, name, salt, password, isAdmin });
   return user;
 };
 

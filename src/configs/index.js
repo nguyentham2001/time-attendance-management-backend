@@ -14,6 +14,10 @@ const {
 
   JWT_SECRET_KEY,
   JWT_EXPIRES_TIME,
+
+  ADMIN_NAME,
+  ADMIN_EMAIL,
+  ADMIN_PASSWORD,
 } = process.env;
 
 const MONGO_URI =
@@ -27,4 +31,7 @@ module.exports = {
   PEPPER,
   JWT_SECRET_KEY,
   JWT_EXPIRES_TIME: formatNumber(JWT_EXPIRES_TIME, A_WEEK),
+  ADMIN_NAME,
+  ADMIN_EMAIL,
+  ADMIN_PASSWORD,
 };
