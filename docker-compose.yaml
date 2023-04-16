@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  tam_mongo:
+    image: mongo:latest
+    container_name: tam_mongo
+    restart: always
+    volumes:
+      - db-tam:/data/db
+    ports:
+      - ${MONGO_PUBLIC_PORT}:${MONGO_PORT}
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+
+volumes:
+  db-tam:
