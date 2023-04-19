@@ -7,14 +7,14 @@ const isValidObjectId = (id) => {
   return String(new ObjectId(id)) === String(id);
 };
 
-const findDocument = (Model, condition) => {
+const findDocument = async (Model, condition) => {
   let element = null;
   if (isValidObjectId(condition)) {
-    element = Model.findById(condition);
+    element = await Model.findById(condition).lean();
   }
 
   if (condition && typeof condition === 'object') {
-    element = Model.findOne(condition);
+    element = await Model.findOne(condition).lean();
   }
 
   return element;

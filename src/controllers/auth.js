@@ -14,7 +14,7 @@ const login = async (req, res) => {
 
 const verifyAccessToken = async (req, res) => {
   const { accessToken } = req;
-  const { user } = await authService.verifyAccessToken(accessToken);
+  const user = await authService.verifyAccessToken(accessToken);
   res.send({ status: 1, result: { user } });
 };
 

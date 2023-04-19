@@ -39,9 +39,6 @@ const verifyAccessToken = async (accessToken) => {
 
   const user = await userDao.findUser(userId);
 
-  delete user.password;
-  delete user.salt;
-
   return user;
 };
 

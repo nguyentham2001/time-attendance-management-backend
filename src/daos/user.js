@@ -16,7 +16,7 @@ const createUser = async (data) => {
 };
 
 const findUser = async (condition, { hideSensitiveFields = true } = {}) => {
-  const user = findDocument(User, condition);
+  const user = await findDocument(User, condition);
 
   if (user == null) return null;
 
