@@ -25,6 +25,9 @@ const MONGO_URI =
     ? `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}?authSource=admin`
     : `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}`;
 
+const PAGE_NUMBER_DEFAULT = 1;
+const PAGE_SIZE_DEFAULT = 10;
+
 module.exports = {
   PORT: PORT || 3000,
   MONGO_URI,
@@ -34,4 +37,6 @@ module.exports = {
   ADMIN_NAME,
   ADMIN_EMAIL,
   ADMIN_PASSWORD,
+  PAGE_NUMBER_DEFAULT,
+  PAGE_SIZE_DEFAULT,
 };
