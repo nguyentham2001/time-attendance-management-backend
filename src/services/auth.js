@@ -22,7 +22,10 @@ const generateAccessToken = async (userId) => {
 };
 
 const login = async (email, password) => {
-  const user = await userDao.findUser({ email });
+  const user = await userDao.findUser(
+    { email },
+    { hideSensitiveFields: false },
+  );
   if (!user) throw new CustomError(errorCodes.USER_NOT_FOUND);
 
   const isCorrectPassword = await comparePassword(password, user.password);
