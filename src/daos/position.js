@@ -13,7 +13,7 @@ const getListPositions = async ({
 
   if (search) {
     const searchRegex = new RegExp(search, 'gi');
-    match.code = searchRegex;
+    match.name = searchRegex;
   }
 
   let offset = 0;
@@ -29,11 +29,7 @@ const getListPositions = async ({
     },
     {
       $facet: {
-        result: [
-          { $sort: { createdAt: -1 } },
-          { $skip: offset },
-          ...limitQuery,
-        ],
+        result: [{ $skip: offset }, ...limitQuery],
         totalCount: [{ $count: 'count' }],
       },
     },

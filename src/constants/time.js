@@ -1,0 +1,6 @@
+module.exports = {
+  A_WEEK: 7 * 86400 * 1000,
+  WAITING_TIME_PER_LOOP: 100,
+  INFINITE_SMALL_DATE: new Date('1970/01/01'),
+  INFINITE_GREATE_DATE: new Date('9970/01/01'),
+};

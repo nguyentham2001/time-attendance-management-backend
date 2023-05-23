@@ -30,11 +30,7 @@ const getListDepartments = async ({
     },
     {
       $facet: {
-        result: [
-          { $sort: { createdAt: -1 } },
-          { $skip: offset },
-          ...limitQuery,
-        ],
+        result: [{ $skip: offset }, ...limitQuery],
         totalCount: [{ $count: 'count' }],
       },
     },

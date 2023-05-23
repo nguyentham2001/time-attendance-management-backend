@@ -11,8 +11,14 @@ const {
   encryptPassword,
   comparePassword,
 } = require('../utils/security');
+const generateId = require('./generateId');
+const { sendMail } = require('./mail');
 
-const { JWT_SECRET_KEY, JWT_EXPIRES_TIME } = require('../configs');
+const {
+  JWT_SECRET_KEY,
+  JWT_EXPIRES_TIME,
+  FRONTEND_PAGE_DOMAIN,
+} = require('../configs');
 
 const generateAccessToken = async (userId) => {
   const accessToken = await jwt.sign({ userId }, JWT_SECRET_KEY, {
@@ -45,7 +51,22 @@ const verifyAccessToken = async (accessToken) => {
   return user;
 };
 
-const register = async ({ email, name, password, isAdmin }) => {
+const register = async ({
+  email,
+  name,
+  phoneNumber,
+  address,
+  dateOfBirth,
+  identityNumber,
+  issuedOn,
+  issuedBy,
+  signingDate,
+  workingDate,
+  positionId,
+  departmentId,
+  password,
+  isAdmin = false,
+}) => {
   let user = await userDao.findUser({ email });
   if (user) throw new CustomError(errorCodes.USER_EXISTS);
 
@@ -53,7 +74,38 @@ const register = async ({ email, name, password, isAdmin }) => {
   password = password || generateRandomString(16);
   password = await encryptPassword(password, salt);
 
-  user = await userDao.createUser({ email, name, salt, password, isAdmin });
+  let employeeId;
+  if (!isAdmin) {
+    employeeId = await generateId({ alias: 'NV' });
+
+    sendMail({
+      to: email,
+      subject: 'Tài khoản đăng nhập hệ thống TIMEKEEPING',
+      html:
+        `Chào <strong>${name}</strong>!<br /><br />` +
+        `Tài khoản của bạn đã được tạo thành công trên hệ thống TIMEKEEPING. Để sử dụng dịch vụ, vui lòng truy cập vào địa chỉ ${FRONTEND_PAGE_DOMAIN} và đăng nhập với email <strong>${email}</strong> - mật khẩu <strong>${password}</strong>.<br /><br />` +
+        'Trân trọng!',
+    });
+  }
+
+  user = await userDao.createUser({
+    employeeId,
+    email,
+    name,
+    phoneNumber,
+    address,
+    dateOfBirth,
+    identityNumber,
+    issuedOn,
+    issuedBy,
+    signingDate,
+    workingDate,
+    positionId,
+    departmentId,
+    salt,
+    password,
+    isAdmin,
+  });
   return user;
 };
 
