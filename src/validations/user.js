@@ -11,6 +11,27 @@ const getUsers = {
   }),
 };
 
+const updateUser = {
+  params: Joi.object({
+    id: Joi.string().trim().required(),
+  }),
+  body: Joi.object({
+    name: Joi.string().trim(),
+    phoneNumber: Joi.string().trim(),
+    email: Joi.string().email().trim().lowercase(),
+    address: Joi.string().trim(),
+    dateOfBirth: Joi.date(),
+    identityNumber: Joi.string().trim(),
+    issuedOn: Joi.date(),
+    issuedBy: Joi.string().trim(),
+    signingDate: Joi.date(),
+    workingDate: Joi.date(),
+    positionId: Joi.string().trim(),
+    departmentId: Joi.string().trim(),
+    password: Joi.string().trim(),
+  }),
+};
+
 const deleteUser = {
   params: Joi.object({
     id: Joi.string().trim().required(),
@@ -19,5 +40,6 @@ const deleteUser = {
 
 module.exports = {
   getUsersValidate: customValidate(getUsers),
+  updateUserValidate: customValidate(updateUser),
   deleteUserValidate: customValidate(deleteUser),
 };

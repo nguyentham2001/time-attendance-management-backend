@@ -9,6 +9,12 @@ const getListUsers = async (req, res) => {
   return res.send({ status: 1, result });
 };
 
+const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const user = await userService.updateUser(id, req.body);
+  return res.send({ status: 1, result: user });
+};
+
 const deleteUser = async (req, res) => {
   const { id: userId } = req.params;
 
@@ -16,4 +22,4 @@ const deleteUser = async (req, res) => {
   return res.send({ status: 1, result });
 };
 
-module.exports = { getUser, getListUsers, deleteUser };
+module.exports = { getUser, getListUsers, updateUser, deleteUser };

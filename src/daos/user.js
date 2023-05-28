@@ -9,7 +9,7 @@ const hideUserSensitiveFields = (user) => {
 
 const getListUsers = async ({ pageNum = 0, limit, search, ...condition }) => {
   limit = parseInt(limit, 10);
-  const match = parseCondition({ ...condition });
+  const match = parseCondition({ ...condition, isAdmin: false });
 
   if (search) {
     const searchRegex = new RegExp(search, 'gi');

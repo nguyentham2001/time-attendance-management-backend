@@ -14,7 +14,7 @@ const getListDepartments = async ({
 
   if (search) {
     const searchRegex = new RegExp(search, 'gi');
-    match.code = searchRegex;
+    match.name = searchRegex;
   }
 
   let offset = 0;
