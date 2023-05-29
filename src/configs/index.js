@@ -3,6 +3,7 @@ const { formatNumber } = require('../utils/number');
 
 const {
   PORT = 3000,
+  DOMAIN_NAME,
 
   PEPPER,
 
@@ -29,6 +30,8 @@ const {
   ADMIN_NAME,
   ADMIN_EMAIL,
   ADMIN_PASSWORD,
+
+  FILE_SIZE_LIMITED,
 } = process.env;
 
 const MONGO_URI =
@@ -39,8 +42,11 @@ const MONGO_URI =
 const PAGE_NUMBER_DEFAULT = 1;
 const PAGE_SIZE_DEFAULT = 10;
 
+const MB = 1024 * 1024;
+
 module.exports = {
   PORT: PORT || 3000,
+  DOMAIN_NAME,
 
   MONGO_URI,
 
@@ -66,4 +72,6 @@ module.exports = {
 
   PAGE_NUMBER_DEFAULT,
   PAGE_SIZE_DEFAULT,
+
+  FILE_SIZE_LIMITED: parseInt(FILE_SIZE_LIMITED || 10, 10) * MB,
 };
