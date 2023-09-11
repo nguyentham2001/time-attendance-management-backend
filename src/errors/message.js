@@ -16,6 +16,10 @@ const getErrorMessage = (code) => {
       return 'Position already exists';
     case codes.POSITION_NOT_FOUND:
       return 'Position is not found';
+    case codes.ABSENCE_NAME_EXIST:
+      return 'Absence already exists';
+    case codes.ABSENCE_NOT_FOUND:
+      return 'Absence is not found';
     default:
       return null;
   }
