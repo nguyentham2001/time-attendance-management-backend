@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const asyncMiddleware = require('../middlewares/async');
-const { authAdmin } = require('../middlewares/auth');
+const { authAdmin, auth } = require('../middlewares/auth');
 const userController = require('../controllers/user');
 const {
   getUsersValidate,
@@ -8,7 +8,8 @@ const {
   deleteUserValidate,
 } = require('../validations/user');
 
-router.get('/me', authAdmin, asyncMiddleware(userController.getUser));
+router.get('/me', auth, asyncMiddleware(userController.getUser));
+router.put('/me', auth, asyncMiddleware(userController.updateProfile));
 router.get(
   '/users',
   authAdmin,

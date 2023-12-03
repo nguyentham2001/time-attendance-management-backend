@@ -19,6 +19,7 @@ const updateUser = {
     name: Joi.string().trim(),
     phoneNumber: Joi.string().trim(),
     email: Joi.string().email().trim().lowercase(),
+    avatar: Joi.string().trim(),
     address: Joi.string().trim(),
     dateOfBirth: Joi.date(),
     identityNumber: Joi.string().trim(),

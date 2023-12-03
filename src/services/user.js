@@ -19,7 +19,7 @@ const getListUsers = async (condition) => {
 };
 
 const updateUser = async (id, data) => {
-  const user = await userDao.findUser(id);
+  let user = await userDao.findUser(id);
 
   if (!user) {
     throw new CustomError(errorCodes.USER_NOT_FOUND);
@@ -31,6 +31,8 @@ const updateUser = async (id, data) => {
   }
 
   await userDao.updateUser(id, data);
+
+  user = await userDao.findUser(id);
 
   return user;
 };

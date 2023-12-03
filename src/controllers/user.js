@@ -4,6 +4,12 @@ async function getUser(req, res) {
   return res.send({ status: 1, result: req.user });
 }
 
+const updateProfile = async (req, res) => {
+  const { _id: id } = req.user;
+  const user = await userService.updateUser(id, req.body);
+  return res.send({ status: 1, result: user });
+};
+
 const getListUsers = async (req, res) => {
   const result = await userService.getListUsers({ ...req.query });
   return res.send({ status: 1, result });
@@ -22,4 +28,10 @@ const deleteUser = async (req, res) => {
   return res.send({ status: 1, result });
 };
 
-module.exports = { getUser, getListUsers, updateUser, deleteUser };
+module.exports = {
+  getUser,
+  updateProfile,
+  getListUsers,
+  updateUser,
+  deleteUser,
+};

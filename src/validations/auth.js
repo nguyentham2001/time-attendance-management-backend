@@ -12,6 +12,7 @@ const register = {
     name: Joi.string().trim().required(),
     phoneNumber: Joi.string().trim(),
     email: Joi.string().email().trim().lowercase().required(),
+    avatar: Joi.string().trim(),
     address: Joi.string().trim(),
     dateOfBirth: Joi.date(),
     identityNumber: Joi.string().trim(),
