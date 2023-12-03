@@ -1,4 +1,10 @@
+const {
+  Types: { ObjectId },
+} = require('mongoose');
+
 const User = require('../models/user');
+const Position = require('../models/position');
+const Department = require('../models/department');
 const { pagination } = require('../utils/pagination');
 const { findDocument, parseCondition } = require('./daoUtil');
 
@@ -6,6 +12,70 @@ const hideUserSensitiveFields = (user) => {
   delete user.password;
   delete user.salt;
 };
+
+const lookupPosition = [
+  {
+    $lookup: {
+      from: Position.collection.name,
+      localField: 'positionId',
+      foreignField: '_id',
+      as: 'positionData',
+    },
+  },
+  {
+    $unwind: { path: '$positionData', preserveNullAndEmptyArrays: true },
+  },
+  {
+    $project: {
+      positionId: 0,
+    },
+  },
+  {
+    $addFields: {
+      position: {
+        positionId: '$positionData._id',
+        name: '$positionData.name',
+      },
+    },
+  },
+  {
+    $project: {
+      positionData: 0,
+    },
+  },
+];
+
+const lookupDepartment = [
+  {
+    $lookup: {
+      from: Department.collection.name,
+      localField: 'departmentId',
+      foreignField: '_id',
+      as: 'departmentData',
+    },
+  },
+  {
+    $unwind: { path: '$departmentData', preserveNullAndEmptyArrays: true },
+  },
+  {
+    $project: {
+      departmentId: 0,
+    },
+  },
+  {
+    $addFields: {
+      department: {
+        departmentId: '$departmentData._id',
+        name: '$departmentData.name',
+      },
+    },
+  },
+  {
+    $project: {
+      departmentData: 0,
+    },
+  },
+];
 
 const getListUsers = async ({ pageNum = 0, limit, search, ...condition }) => {
   limit = parseInt(limit, 10);
@@ -36,6 +106,8 @@ const getListUsers = async ({ pageNum = 0, limit, search, ...condition }) => {
         salt: 0,
       },
     },
+    ...lookupPosition,
+    ...lookupDepartment,
     {
       $facet: {
         result: [
@@ -87,4 +159,29 @@ const deleteUser = async (userId) => {
   await User.findByIdAndDelete(userId);
 };
 
-module.exports = { getListUsers, createUser, findUser, updateUser, deleteUser };
+const getUserInfo = async (userId) => {
+  const [user] = await User.aggregate([
+    {
+      $match: { _id: ObjectId(userId) },
+    },
+    {
+      $project: {
+        password: 0,
+        salt: 0,
+      },
+    },
+    ...lookupPosition,
+    ...lookupDepartment,
+  ]);
+
+  return user;
+};
+
+module.exports = {
+  getListUsers,
+  createUser,
+  findUser,
+  updateUser,
+  deleteUser,
+  getUserInfo,
+};

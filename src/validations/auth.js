@@ -1,4 +1,7 @@
 const { Joi, validate } = require('express-validation');
+const { GENDER } = require('../constants');
+
+const validRequestGender = Object.values(GENDER);
 
 const login = {
   body: Joi.object({
@@ -12,8 +15,12 @@ const register = {
     name: Joi.string().trim().required(),
     phoneNumber: Joi.string().trim(),
     email: Joi.string().email().trim().lowercase().required(),
+    gender: Joi.string()
+      .valid(...validRequestGender)
+      .required(),
     avatar: Joi.string().trim(),
     address: Joi.string().trim(),
+    placeOfBirth: Joi.string().trim(),
     dateOfBirth: Joi.date(),
     identityNumber: Joi.string().trim(),
     issuedOn: Joi.date(),
@@ -23,6 +30,9 @@ const register = {
     positionId: Joi.string().trim().required(),
     departmentId: Joi.string().trim().required(),
     password: Joi.string().trim(),
+    bankAccount: Joi.string().trim().required(),
+    bank: Joi.string().trim().required(),
+    education: Joi.string().trim(),
   }),
 };
 

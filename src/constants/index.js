@@ -5,6 +5,7 @@ const ABSENCE_REQUEST_TYPE = require('./absenceRequestType');
 const ABSENCE_REQUEST_STATUS = require('./absenceRequestStatus');
 const OVERTIME_TYPE = require('./overtimeType');
 const OVERTIME_STATUS = require('./overtimeStatus');
+const GENDER = require('./gender');
 
 module.exports = {
   TIME,
@@ -14,4 +15,5 @@ module.exports = {
   ABSENCE_REQUEST_STATUS,
   OVERTIME_TYPE,
   OVERTIME_STATUS,
+  GENDER,
 };

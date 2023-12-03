@@ -51,28 +51,14 @@ const verifyAccessToken = async (accessToken) => {
   return user;
 };
 
-const register = async ({
-  email,
-  name,
-  phoneNumber,
-  address,
-  dateOfBirth,
-  identityNumber,
-  issuedOn,
-  issuedBy,
-  signingDate,
-  workingDate,
-  positionId,
-  departmentId,
-  password,
-  isAdmin = false,
-}) => {
+const register = async ({ isAdmin = false, ...userData }) => {
+  const { email, name } = userData;
   let user = await userDao.findUser({ email });
   if (user) throw new CustomError(errorCodes.USER_EXISTS);
 
+  let { password } = userData;
   const salt = generateSalt();
   password = password || generateRandomString(16);
-  password = await encryptPassword(password, salt);
 
   let employeeId;
   if (!isAdmin) {
@@ -90,20 +76,9 @@ const register = async ({
 
   user = await userDao.createUser({
     employeeId,
-    email,
-    name,
-    phoneNumber,
-    address,
-    dateOfBirth,
-    identityNumber,
-    issuedOn,
-    issuedBy,
-    signingDate,
-    workingDate,
-    positionId,
-    departmentId,
+    ...userData,
     salt,
-    password,
+    password: await encryptPassword(password, salt),
     isAdmin,
   });
   return user;

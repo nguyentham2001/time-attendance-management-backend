@@ -2,6 +2,9 @@ const { Joi } = require('express-validation');
 
 const { customValidate } = require('./validationUtil');
 const { PAGE_NUMBER_DEFAULT } = require('../configs');
+const { GENDER } = require('../constants');
+
+const validRequestGender = Object.values(GENDER);
 
 const getUsers = {
   query: Joi.object({
@@ -19,8 +22,10 @@ const updateUser = {
     name: Joi.string().trim(),
     phoneNumber: Joi.string().trim(),
     email: Joi.string().email().trim().lowercase(),
+    gender: Joi.string().valid(...validRequestGender),
     avatar: Joi.string().trim(),
     address: Joi.string().trim(),
+    placeOfBirth: Joi.string().trim(),
     dateOfBirth: Joi.date(),
     identityNumber: Joi.string().trim(),
     issuedOn: Joi.date(),
@@ -30,6 +35,9 @@ const updateUser = {
     positionId: Joi.string().trim(),
     departmentId: Joi.string().trim(),
     password: Joi.string().trim(),
+    bankAccount: Joi.string().trim(),
+    bank: Joi.string().trim(),
+    education: Joi.string().trim(),
   }),
 };
 

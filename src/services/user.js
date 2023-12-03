@@ -32,7 +32,7 @@ const updateUser = async (id, data) => {
 
   await userDao.updateUser(id, data);
 
-  user = await userDao.findUser(id);
+  user = await userDao.getUserInfo(id);
 
   return user;
 };
@@ -49,8 +49,17 @@ const deleteUser = async (id) => {
   return user;
 };
 
+const getUserInfo = async (id) => {
+  const user = await userDao.getUserInfo(id);
+  if (!user) {
+    throw new CustomError(errorCodes.USER_NOT_FOUND);
+  }
+  return user;
+};
+
 module.exports = {
   deleteUser,
   getListUsers,
   updateUser,
+  getUserInfo,
 };

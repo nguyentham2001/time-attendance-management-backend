@@ -1,7 +1,9 @@
 const userService = require('../services/user');
 
 async function getUser(req, res) {
-  return res.send({ status: 1, result: req.user });
+  const { _id: id } = req.user;
+  const user = await userService.getUserInfo(id);
+  return res.send({ status: 1, result: user });
 }
 
 const updateProfile = async (req, res) => {
