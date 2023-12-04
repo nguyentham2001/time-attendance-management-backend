@@ -2,6 +2,35 @@ const Absence = require('../models/absence');
 const { pagination } = require('../utils/pagination');
 const { findDocument, parseCondition } = require('./daoUtil');
 
+const getNumberOfDaysAbsence = async () => {
+  const [result] = await Absence.aggregate([
+    {
+      $group: {
+        _id: 0,
+        tests: {
+          $push: {
+            k: { $toString: '$_id' },
+            v: '$total',
+          },
+        },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        numberOfDays: {
+          $arrayToObject: {
+            $filter: { input: '$tests', cond: '$$this.v' },
+          },
+        },
+      },
+    },
+  ]);
+
+  const { numberOfDays = {} } = result || {};
+  return numberOfDays;
+};
+
 const getListAbsences = async ({
   pageNum = 0,
   limit,
@@ -71,4 +100,5 @@ module.exports = {
   updateAbsence,
   deleteAbsence,
   getListAbsences,
+  getNumberOfDaysAbsence,
 };
