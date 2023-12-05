@@ -20,6 +20,14 @@ const getErrorMessage = (code) => {
       return 'Absence already exists';
     case codes.ABSENCE_NOT_FOUND:
       return 'Absence is not found';
+    case codes.ABSENCE_REQUEST_NOT_FOUND:
+      return 'Absence request is not found';
+    case codes.ABSENCE_REQUEST_DAY_GREATER_MAX:
+      return 'The total number of days off is greater than the maximum number of days off allowed for this type of leave';
+    case codes.ABSENCE_REQUEST_DAY_CONFLICT:
+      return 'Date conflicts with a previous request';
+    case codes.ABSENCE_REQUEST_NOT_ALLOW_DELETE:
+      return 'Absence request not allow delete';
     default:
       return null;
   }

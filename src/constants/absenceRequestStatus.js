@@ -1,5 +1,6 @@
 module.exports = {
   PENDING: 'PENDING',
+  CONFIRMED: 'CONFIRMED',
   APPROVED: 'APPROVED',
   CANCEL: 'CANCEL',
 };

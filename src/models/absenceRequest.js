@@ -16,7 +16,10 @@ const absenceRequestSchema = new mongoose.Schema(
       type: ObjectId,
       ref: 'User',
     },
-    absenceId: String,
+    absenceId: {
+      type: ObjectId,
+      ref: 'Absence',
+    },
     requestType: {
       type: String,
       enum: Object.values(ABSENCE_REQUEST_TYPE),
