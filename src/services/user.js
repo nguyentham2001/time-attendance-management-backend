@@ -1,4 +1,5 @@
 const userDao = require('../daos/user');
+const positionDao = require('../daos/position');
 
 const CustomError = require('../errors/CustomError');
 const errorCodes = require('../errors/code');
@@ -57,9 +58,31 @@ const getUserInfo = async (id) => {
   return user;
 };
 
+const getListSupervisors = async ({ positionId, departmentId }) => {
+  const position = await positionDao.findPosition(positionId);
+  if (!position) {
+    return [];
+  }
+
+  const { rank } = position;
+
+  const { data: higherRankPositions } = await positionDao.getListPositions({
+    rank: { $gt: rank },
+  });
+
+  const positionIds = higherRankPositions.map(({ _id }) => _id);
+
+  const result = await userDao.getListUsers({
+    departmentId,
+    positionId: { $in: positionIds },
+  });
+  return result;
+};
+
 module.exports = {
   deleteUser,
   getListUsers,
   updateUser,
   getUserInfo,
+  getListSupervisors,
 };

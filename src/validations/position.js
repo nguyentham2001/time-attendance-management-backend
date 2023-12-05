@@ -6,6 +6,7 @@ const { PAGE_NUMBER_DEFAULT } = require('../configs');
 const createPosition = {
   body: Joi.object({
     name: Joi.string().trim().required(),
+    rank: Joi.number().min(1).max(5).required(),
   }),
 };
 
@@ -15,6 +16,7 @@ const updatePosition = {
   }),
   body: Joi.object({
     name: Joi.string().trim(),
+    rank: Joi.number().min(1).max(5),
   }),
 };
 

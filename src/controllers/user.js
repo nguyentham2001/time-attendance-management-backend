@@ -30,10 +30,20 @@ const deleteUser = async (req, res) => {
   return res.send({ status: 1, result });
 };
 
+const getListSupervisors = async (req, res) => {
+  const { positionId, departmentId } = req.user;
+  const result = await userService.getListSupervisors({
+    positionId,
+    departmentId,
+  });
+  return res.send({ status: 1, result });
+};
+
 module.exports = {
   getUser,
   updateProfile,
   getListUsers,
   updateUser,
   deleteUser,
+  getListSupervisors,
 };
