@@ -1,4 +1,5 @@
 const moment = require('moment');
+const { TIME_FORMAT } = require('../constants/time');
 
 const splitDate = (date) => {
   const year = date.getFullYear();
@@ -23,9 +24,17 @@ const maxDate = (dates) => {
   return moment.max(moments);
 };
 
+const diffTimeFormat = (startTime, endTime) => {
+  const diff = moment(endTime, TIME_FORMAT).diff(
+    moment(startTime, TIME_FORMAT),
+  );
+  return diff;
+};
+
 module.exports = {
   splitDate,
   diffTime,
   minDate,
   maxDate,
+  diffTimeFormat,
 };

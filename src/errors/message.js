@@ -30,6 +30,10 @@ const getErrorMessage = (code) => {
       return 'Absence request not allow delete';
     case codes.SALARY_NOT_FOUND:
       return 'Salary is not found';
+    case codes.OVERTIME_NOT_FOUND:
+      return 'Overtime is not found';
+    case codes.OVERTIME_TIME_RANGE_INVALID:
+      return 'startTime must be less than endTime';
     default:
       return null;
   }

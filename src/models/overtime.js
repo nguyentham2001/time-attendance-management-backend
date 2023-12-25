@@ -3,7 +3,7 @@ const { OVERTIME_TYPE, OVERTIME_STATUS } = require('../constants');
 
 const { ObjectId } = mongoose.Schema.Types;
 
-const holidaySchema = new mongoose.Schema(
+const overtimeSchema = new mongoose.Schema(
   {
     userId: {
       type: ObjectId,
@@ -34,4 +34,4 @@ const holidaySchema = new mongoose.Schema(
   },
 );
 
-module.exports = mongoose.model('Holiday', holidaySchema);
+module.exports = mongoose.model('Overtime', overtimeSchema);
