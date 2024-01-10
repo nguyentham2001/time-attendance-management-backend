@@ -28,7 +28,7 @@ const getErrorMessage = (code) => {
       return 'Date conflicts with a previous request';
     case codes.ABSENCE_REQUEST_NOT_ALLOW_DELETE:
       return 'Absence request not allow delete';
-    case codes.SALARY_NOT_FOUND:
+    case codes.SALARY_PROCESS_NOT_FOUND:
       return 'Salary is not found';
     case codes.OVERTIME_NOT_FOUND:
       return 'Overtime is not found';

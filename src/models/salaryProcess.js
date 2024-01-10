@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { ObjectId } = mongoose.Schema.Types;
 
-const salarySchema = new mongoose.Schema(
+const salaryProcessSchema = new mongoose.Schema(
   {
     userId: {
       type: ObjectId,
@@ -36,4 +36,4 @@ const salarySchema = new mongoose.Schema(
   },
 );
 
-module.exports = mongoose.model('Salary', salarySchema);
+module.exports = mongoose.model('SalaryProcess', salaryProcessSchema);

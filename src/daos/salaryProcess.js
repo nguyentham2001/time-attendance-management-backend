@@ -1,11 +1,11 @@
-const Salary = require('../models/salary');
+const SalaryProcess = require('../models/salaryProcess');
 const User = require('../models/user');
 const Position = require('../models/position');
 const Department = require('../models/department');
 const { pagination } = require('../utils/pagination');
 const { parseCondition, findDocument } = require('./daoUtil');
 
-const getListSalaries = async ({ pageNum = 0, limit, ...condition }) => {
+const getListSalaryProcess = async ({ pageNum = 0, limit, ...condition }) => {
   limit = parseInt(limit, 10);
   const match = parseCondition({ ...condition });
 
@@ -111,7 +111,7 @@ const getListSalaries = async ({ pageNum = 0, limit, ...condition }) => {
     },
   ];
 
-  const [queryResult] = await Salary.aggregate([
+  const [queryResult] = await SalaryProcess.aggregate([
     {
       $match: match,
     },
@@ -135,36 +135,36 @@ const getListSalaries = async ({ pageNum = 0, limit, ...condition }) => {
   return { data: result, totalCount: total };
 };
 
-const createSalary = async (data) => {
-  const salary = await Salary.create(data);
+const createSalaryProcess = async (data) => {
+  const salary = await SalaryProcess.create(data);
   return salary;
 };
 
-const findSalary = async (condition) => {
-  const salary = await findDocument(Salary, condition);
+const findSalaryProcess = async (condition) => {
+  const salary = await findDocument(SalaryProcess, condition);
   return salary;
 };
 
-const updateSalary = async (id, data) => {
-  const salary = await Salary.findByIdAndUpdate(id, data, {
+const updateSalaryProcess = async (id, data) => {
+  const salary = await SalaryProcess.findByIdAndUpdate(id, data, {
     new: true,
   });
   return salary;
 };
 
-const updateManySalary = async (condition, updateData) => {
-  await Salary.updateMany(condition, { $set: updateData });
+const updateManySalaryProcess = async (condition, updateData) => {
+  await SalaryProcess.updateMany(condition, { $set: updateData });
 };
 
-const deleteSalary = async (id) => {
-  await Salary.findByIdAndDelete(id);
+const deleteSalaryProcess = async (id) => {
+  await SalaryProcess.findByIdAndDelete(id);
 };
 
 module.exports = {
-  getListSalaries,
-  createSalary,
-  findSalary,
-  updateSalary,
-  deleteSalary,
-  updateManySalary,
+  getListSalaryProcess,
+  createSalaryProcess,
+  findSalaryProcess,
+  updateSalaryProcess,
+  deleteSalaryProcess,
+  updateManySalaryProcess,
 };

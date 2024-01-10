@@ -3,7 +3,7 @@ const { Joi } = require('express-validation');
 const { customValidate } = require('./validationUtil');
 const { PAGE_NUMBER_DEFAULT } = require('../configs');
 
-const createSalary = {
+const createSalaryProcess = {
   body: Joi.object({
     userId: Joi.string().trim().required(),
     salary: Joi.number().required(),
@@ -18,7 +18,7 @@ const createSalary = {
   }),
 };
 
-const updateSalary = {
+const updateSalaryProcess = {
   params: Joi.object({
     id: Joi.string().trim().required(),
   }),
@@ -34,19 +34,19 @@ const updateSalary = {
   }),
 };
 
-const getSalary = {
+const getSalaryProcess = {
   params: Joi.object({
     id: Joi.string().trim().required(),
   }),
 };
 
-const deleteSalary = {
+const deleteSalaryProcess = {
   params: Joi.object({
     id: Joi.string().trim().required(),
   }),
 };
 
-const getListSalaries = {
+const getListSalaryProcess = {
   query: Joi.object({
     pageNum: Joi.number().integer().min(0).default(PAGE_NUMBER_DEFAULT),
     limit: Joi.number().integer().min(1),
@@ -54,17 +54,17 @@ const getListSalaries = {
   }),
 };
 
-const activeSalary = {
+const activeSalaryProcess = {
   body: Joi.object({
-    salaryId: Joi.string().trim().required(),
+    salaryProcessId: Joi.string().trim().required(),
   }),
 };
 
 module.exports = {
-  createSalaryValidate: customValidate(createSalary),
-  updateSalaryValidate: customValidate(updateSalary),
-  getSalaryValidate: customValidate(getSalary),
-  deleteSalaryValidate: customValidate(deleteSalary),
-  getListSalariesValidate: customValidate(getListSalaries),
-  activeSalaryValidate: customValidate(activeSalary),
+  createSalaryProcessValidate: customValidate(createSalaryProcess),
+  updateSalaryProcessValidate: customValidate(updateSalaryProcess),
+  getSalaryProcessValidate: customValidate(getSalaryProcess),
+  deleteSalaryProcessValidate: customValidate(deleteSalaryProcess),
+  getListSalaryProcessValidate: customValidate(getListSalaryProcess),
+  activeSalaryProcessValidate: customValidate(activeSalaryProcess),
 };
