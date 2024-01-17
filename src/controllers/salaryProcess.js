@@ -2,7 +2,7 @@ const salaryService = require('../services/salaryProcess');
 
 const getListSalaryProcess = async (req, res) => {
   const { _id: userId, isAdmin } = req.user;
-  const { userId: queryUserId } = req.query;
+  const { userId: queryUserId, ...other } = req.query;
 
   let query = {};
   if (!isAdmin) {
@@ -11,7 +11,10 @@ const getListSalaryProcess = async (req, res) => {
     query = { userId: queryUserId };
   }
 
-  const result = await salaryService.getListSalaryProcess(query);
+  const result = await salaryService.getListSalaryProcess({
+    ...query,
+    ...other,
+  });
 
   return res.send({ status: 1, result });
 };
