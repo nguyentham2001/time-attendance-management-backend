@@ -4,9 +4,9 @@ const { ObjectId } = mongoose.Schema.Types;
 
 const workdaySchema = new mongoose.Schema(
   {
-    employeeId: {
+    userId: {
       type: ObjectId,
-      ref: 'Position',
+      ref: 'User',
     },
     date: Date,
     firstEntry: String,

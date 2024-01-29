@@ -14,6 +14,7 @@ const salarySchema = new mongoose.Schema(
       type: ObjectId,
       ref: 'User',
     },
+    month: String,
     baseSalary: Number,
     totalNormalWorkDay: {
       type: Number,

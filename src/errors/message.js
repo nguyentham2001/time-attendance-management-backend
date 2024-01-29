@@ -29,11 +29,15 @@ const getErrorMessage = (code) => {
     case codes.ABSENCE_REQUEST_NOT_ALLOW_DELETE:
       return 'Absence request not allow delete';
     case codes.SALARY_PROCESS_NOT_FOUND:
-      return 'Salary is not found';
+      return 'Salary process is not found';
     case codes.OVERTIME_NOT_FOUND:
       return 'Overtime is not found';
     case codes.OVERTIME_TIME_RANGE_INVALID:
       return 'startTime must be less than endTime';
+    case codes.SALARY_NOT_FOUND:
+      return 'Salary is not found';
+    case codes.SALARY_MONTH_EXIST:
+      return 'Salary month already exists';
     default:
       return null;
   }
